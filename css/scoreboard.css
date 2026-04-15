@@ -1,0 +1,243 @@
+/* Scoreboard Styles */
+
+/* Container for the scoreboard */
+.scoreboard-container {
+  width: 100%;
+  overflow-x: auto;
+  padding: 1rem;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Scoreboard table base styles */
+.scoreboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  min-width: 600px;
+}
+
+/* Table header styling */
+.scoreboard-table thead {
+  background-color: #2c3e50;
+  color: white;
+}
+
+.scoreboard-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-bottom: 2px solid #34495e;
+  white-space: nowrap;
+}
+
+/* Table body rows with alternating colors */
+.scoreboard-table tbody tr {
+  border-bottom: 1px solid #ecf0f1;
+  transition: background-color 0.2s ease;
+}
+
+/* Alternating row colors for readability */
+.scoreboard-table tbody tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+.scoreboard-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Row hover effect */
+.scoreboard-table tbody tr:hover {
+  background-color: #f0f8ff;
+}
+
+/* Table cell styling */
+.scoreboard-table td {
+  padding: 0.875rem 1rem;
+  font-size: 0.95rem;
+  color: #2c3e50;
+}
+
+/* Current round column styling - visually distinct */
+.current-round {
+  background-color: #ffd700 !important;
+  font-weight: 600;
+  color: #000;
+  text-align: center;
+  box-shadow: inset 0 0 0 2px #ffa500;
+}
+
+.scoreboard-table thead .current-round {
+  background-color: #ffa500;
+  color: white;
+  box-shadow: inset 0 0 0 2px #ff8c00;
+}
+
+/* Current round indicator */
+.round-indicator {
+  display: inline-block;
+  background-color: #e74c3c;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+/* Player name column */
+.player-name {
+  font-weight: 500;
+  min-width: 120px;
+}
+
+/* Score columns */
+.score-cell {
+  text-align: center;
+  font-weight: 500;
+  min-width: 60px;
+}
+
+/* Round columns */
+.round-cell {
+  text-align: center;
+  min-width: 50px;
+}
+
+/* Responsive design for tablets */
+@media (max-width: 1024px) {
+  .scoreboard-table th,
+  .scoreboard-table td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .player-name {
+    min-width: 100px;
+  }
+
+  .round-cell {
+    min-width: 45px;
+  }
+
+  .score-cell {
+    min-width: 50px;
+  }
+}
+
+/* Mobile responsive design */
+@media (max-width: 768px) {
+  .scoreboard-container {
+    padding: 0.75rem;
+    border-radius: 4px;
+  }
+
+  .scoreboard-table {
+    min-width: 500px;
+    font-size: 0.875rem;
+  }
+
+  .scoreboard-table th,
+  .scoreboard-table td {
+    padding: 0.625rem 0.375rem;
+    font-size: 0.85rem;
+  }
+
+  .player-name {
+    min-width: 90px;
+    padding: 0.625rem 0.375rem;
+  }
+
+  .round-cell {
+    min-width: 40px;
+  }
+
+  .score-cell {
+    min-width: 45px;
+  }
+
+  .round-indicator {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+  .scoreboard-container {
+    padding: 0.5rem;
+  }
+
+  .scoreboard-table {
+    min-width: 400px;
+  }
+
+  .scoreboard-table th,
+  .scoreboard-table td {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.8rem;
+  }
+
+  .player-name {
+    min-width: 80px;
+    font-size: 0.8rem;
+  }
+
+  .round-cell {
+    min-width: 35px;
+  }
+
+  .score-cell {
+    min-width: 40px;
+  }
+
+  .round-indicator {
+    padding: 0.15rem 0.3rem;
+    font-size: 0.7rem;
+  }
+}
+
+/* Horizontal scroll indicator for mobile */
+@media (max-width: 768px) {
+  .scoreboard-container::after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 30px;
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.1), transparent);
+    pointer-events: none;
+  }
+}
+
+/* Accessibility improvements */
+.scoreboard-table tbody tr:focus-within {
+  outline: 2px solid #3498db;
+  outline-offset: -2px;
+}
+
+.scoreboard-table th {
+  text-transform: capitalize;
+}
+
+/* Print styles */
+@media print {
+  .scoreboard-container {
+    box-shadow: none;
+    background-color: white;
+  }
+
+  .scoreboard-table {
+    page-break-inside: avoid;
+  }
+
+  .scoreboard-table tbody tr {
+    page-break-inside: avoid;
+  }
+}
