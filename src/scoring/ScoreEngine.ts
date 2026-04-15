@@ -12,7 +12,7 @@ export interface ScoreEngine {
 /**
  * Implementation of the Skull King scoring rules
  */
-export class StubScoreEngine implements ScoreEngine {
+export class SkullKingScoreEngine implements ScoreEngine {
   /**
    * Scores a round according to Skull King rules:
    * - If bid == tricks: 10 points + bonus points
