@@ -1,86 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Skull King Card Game</title>
-  <link rel="stylesheet" href="css/game-flow.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skull King - Card Game</title>
+    <link rel="stylesheet" href="css/game-flow.css">
 </head>
 <body>
-  <div id="app" class="game-container">
-    <!-- Game Flow Section -->
-    <section class="game-flow" aria-labelledby="game-status">
-      <div class="game-header">
-        <h1 id="game-status" class="game-title">Skull King</h1>
-        
-        <!-- Phase Indicator -->
-        <div class="phase-indicator" aria-label="Current game phase">
-          <div class="phase-display">
-            <span class="phase-label">Current Phase:</span>
-            <span class="phase-badge" id="currentPhase" data-phase="setup">Setup</span>
-          </div>
+    <div id="app" class="app-container">
+        <!-- Header with Game Title -->
+        <header class="game-header">
+            <h1>Skull King</h1>
+        </header>
+
+        <!-- Game Flow Section -->
+        <section class="game-flow-section">
+            <!-- Phase Indicator -->
+            <div class="phase-indicator" id="phaseIndicator">
+                <h2>Current Phase</h2>
+                <div class="phase-display">
+                    <span id="currentPhase" class="phase-badge phase-setup">Setup</span>
+                </div>
+                <p class="phase-description" id="phaseDescription">Preparing the game...</p>
+            </div>
+
+            <!-- Round Counter -->
+            <div class="round-counter" id="roundCounter">
+                <h3>Progress</h3>
+                <div class="round-display">
+                    <span id="roundNumber" class="round-number">1</span>
+                    <span class="round-separator">/</span>
+                    <span class="round-total">10</span>
+                </div>
+                <p class="round-label">Round</p>
+                <div class="round-progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 10%;"></div>
+                </div>
+            </div>
+
+            <!-- Phase Transition Button -->
+            <div class="phase-action">
+                <button id="nextPhaseButton" class="btn btn-primary" aria-label="Advance to next phase">
+                    Start Bidding
+                </button>
+            </div>
+        </section>
+
+        <!-- Main Game Area -->
+        <main class="game-area">
+            <section class="players-section" id="playersSection">
+                <!-- Player cards will be rendered here -->
+                <div class="players-grid" id="playersGrid"></div>
+            </section>
+
+            <section class="cards-section" id="cardsSection">
+                <!-- Game cards will be rendered here -->
+                <div class="cards-area" id="cardsArea"></div>
+            </section>
+        </main>
+
+        <!-- Game Completion Modal -->
+        <div id="gameOverModal" class="modal" style="display: none;">
+            <div class="modal-overlay"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Game Complete!</h2>
+                    <button class="modal-close" id="closeModal" aria-label="Close modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="winner-section">
+                        <h3 id="winnerName">Winner</h3>
+                        <p class="winner-score" id="winnerScore">Score: 0</p>
+                    </div>
+                    <div class="final-scores" id="finalScores">
+                        <h4>Final Scores</h4>
+                        <ul class="scores-list" id="scoresList">
+                            <!-- Scores will be populated here -->
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="playAgainButton" class="btn btn-primary">Play Again</button>
+                    <button id="exitGameButton" class="btn btn-secondary">Exit</button>
+                </div>
+            </div>
         </div>
-        
-        <!-- Round Counter -->
-        <div class="round-counter" aria-label="Round progress">
-          <span class="round-label">Round:</span>
-          <span class="round-number"><span id="currentRound">0</span> of 10</span>
-        </div>
-      </div>
-      
-      <!-- Phase Transition Button -->
-      <div class="button-container">
-        <button 
-          id="nextPhaseBtn" 
-          class="btn btn-primary" 
-          aria-label="Progress to next phase"
-          data-action="start-bidding"
-        >
-          Start Bidding
-        </button>
-      </div>
-    </section>
-    
-    <!-- Game Completion Modal -->
-    <div id="gameOverModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="gameOverTitle">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 id="gameOverTitle" class="modal-title">Game Over</h2>
-        </div>
-        
-        <div class="modal-body">
-          <div class="winner-section" id="winnerSection">
-            <p class="winner-text">Congratulations, <span id="winnerName" class="winner-name">Player 1</span>!</p>
-            <p class="winner-subtitle">You won the game!</p>
-          </div>
-          
-          <div class="final-scores" id="finalScores" aria-label="Final game scores">
-            <h3 class="scores-title">Final Scores</h3>
-            <ul class="scores-list">
-              <!-- Scores populated dynamically -->
-            </ul>
-          </div>
-        </div>
-        
-        <div class="modal-footer">
-          <button 
-            id="playAgainBtn" 
-            class="btn btn-primary" 
-            aria-label="Start a new game"
-          >
-            Play Again
-          </button>
-          <button 
-            id="exitGameBtn" 
-            class="btn btn-secondary" 
-            aria-label="Exit to main menu"
-          >
-            Exit to Menu
-          </button>
-        </div>
-      </div>
-      <div class="modal-overlay" id="gameOverOverlay"></div>
     </div>
-  </div>
+
+    <script src="js/game-state.js"></script>
+    <script src="js/game-flow-controller.js"></script>
 </body>
 </html>
