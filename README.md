@@ -1,80 +1,148 @@
-# Skull King Swarm Game
+# Game Flow Management
 
-A swarm-managed implementation of the Skull King card game.
+## Overview
 
-## Project Setup
+This module implements comprehensive game flow management for a turn-based card game (Skull King). It handles progression through game phases, round management, and game completion after 10 rounds.
 
-### Prerequisites
-- Node.js >= 16.0.0
-- npm or yarn package manager
+## Architecture
 
-### Installation
+### Core Components
 
-1. Clone the repository:
-```bash
-git clone https://github.com/corynaegle-ai/swarm-managed-skull-king-125
-cd swarm-managed-skull-king-125
+#### GameFlowManager (`src/game/gameFlow.ts`)
+
+The main class responsible for managing:
+- Game state and phase transitions
+- Round progression (1-10 rounds)
+- Phase flow: setup → bidding → scoring → next round
+- Game completion and winner determination
+
+#### Type Definitions (`src/types/`)
+
+- `game.ts`: Game-related types (GamePhase, GameState, GameRound, etc.)
+- `player.ts`: Player interface
+
+## Game Flow
+
+### Phase Progression
+
+1. **Setup Phase**: Initialize round, deal cards
+2. **Bidding Phase**: Players place bids
+3. **Scoring Phase**: Calculate tricks and scores
+4. **Round Completion**: Advance to next round or complete game
+
+### Round Structure
+
+Each round consists of:
+- Round number (1-10)
+- Three phases with completion tracking
+- Setup data (skulls dealt status)
+- Bidding data (player bids)
+- Scoring data (tricks won, round scores)
+
+### Game Completion
+
+After round 10:
+- Game status changes to "completed"
+- Winner is determined (highest total score)
+- Final scores for all players are calculated and displayed
+
+## API Usage
+
+### Initialization
+
+```typescript
+const players = [
+  { id: 'p1', name: 'Player 1', score: 0 },
+  { id: 'p2', name: 'Player 2', score: 0 },
+  { id: 'p3', name: 'Player 3', score: 0 }
+];
+
+const gameFlow = new GameFlowManager(players);
 ```
 
-2. Install dependencies:
-```bash
-npm install
+### Phase Progression
+
+```typescript
+// Setup phase
+gameFlow.completeSetup(true); // true = skulls dealt
+gameFlow.advancePhase(); // → bidding phase
+
+// Bidding phase
+gameFlow.completeBidding({ p1: 3, p2: 2, p3: 4 });
+gameFlow.advancePhase(); // → scoring phase
+
+// Scoring phase
+gameFlow.completeScoring(
+  { p1: 3, p2: 1, p3: 4 }, // tricks
+  { p1: 10, p2: 0, p3: 20 }  // round scores
+);
+gameFlow.advancePhase(); // → next round or game completion
 ```
 
-3. Configure environment:
-```bash
-cp .env.example .env
+### State Queries
+
+```typescript
+// Current state
+gameFlow.getCurrentPhase(); // returns: 'setup' | 'bidding' | 'scoring' | 'complete'
+gameFlow.getCurrentRound(); // returns: 1-10
+gameFlow.getGameStatus(); // returns: 'in_progress' | 'completed'
+gameFlow.isGameComplete(); // returns: boolean
+
+// Game completion info
+gameFlow.getWinner(); // returns: Player | null
+gameFlow.getFinalScores(); // returns: Record<string, number> | null
+gameFlow.getGameSummary(); // returns: complete game summary
+
+// Current round data
+gameFlow.getCurrentRoundData(); // returns: GameRound
+gameFlow.getGameState(); // returns: complete GameState
 ```
 
-### Development
+## Acceptance Criteria
 
-Start the development server:
-```bash
-npm run dev
-```
+✅ **Criterion 1**: Progresses through setup, bidding, scoring phases
+- Implemented in `advancePhase()` method
+- Validated by phase transition logic in `transitionToPhase()`
 
-### Building
+✅ **Criterion 2**: Advances to next round after scoring complete
+- Implemented in `advanceRound()` method
+- Handles round 1-9 transitions
+- Resets phase to 'setup' for new round
 
-Build for production:
-```bash
-npm run build
-```
+✅ **Criterion 3**: Shows game completion after round 10
+- Implemented in `completeGame()` method
+- Triggered after scoring phase of round 10
+- Game status changes to 'completed'
+- Current phase changes to 'complete'
 
-Run the production build:
-```bash
-npm start
-```
+✅ **Criterion 4**: Displays final winner and scores
+- Winner calculation in `calculateWinner()` method
+- Final scores calculation in `calculateFinalScores()` method
+- Both available via `getWinner()`, `getFinalScores()`, and `getGameSummary()`
 
-### Testing
+## Testing
 
-Run tests:
+Comprehensive test suite in `tests/gameFlow.test.ts` covers:
+- Game initialization
+- Phase progression (all three criteria)
+- Round advancement
+- Game completion
+- Winner and score calculation
+- Error handling
+
+Run tests with:
 ```bash
 npm test
 ```
 
-### Linting
+## Error Handling
 
-Run ESLint:
-```bash
-npm run lint
-```
+- Invalid player count (must be 2-6 players)
+- Invalid phase transitions
+- Phase action validation (prevent actions outside their phase)
 
-## Project Structure
+## Constants
 
-```
-.
-├── src/              # Source code
-├── dist/             # Compiled output
-├── package.json      # Project dependencies
-├── tsconfig.json     # TypeScript configuration
-└── .env.example      # Environment variables template
-```
-
-## Development Environment
-
-The development environment is fully configured and runnable with:
-1. TypeScript compilation
-2. Node.js runtime with ts-node
-3. Testing framework (Jest)
-4. Linting (ESLint)
-5. Environment variable management (dotenv)
+- `TOTAL_ROUNDS`: 10
+- `MAX_PLAYERS`: 6
+- `MIN_PLAYERS`: 2
