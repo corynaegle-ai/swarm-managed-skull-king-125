@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bidding Round - Skull King</title>
+    <link rel="stylesheet" href="css/bidding.css">
+</head>
+<body>
+    <main class="bidding-container">
+        <!-- Round Information Section -->
+        <section class="round-info" aria-label="Round Information">
+            <div class="round-header">
+                <h1>Bidding Round</h1>
+                <div class="round-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Round:</span>
+                        <span class="detail-value" data-bid-round-number>1</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Hands Available:</span>
+                        <span class="detail-value" data-bid-hands-available>1</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Players Bidding Section -->
+        <section class="bidding-section" aria-label="Player Bids">
+            <div class="players-grid" data-bid-players-container>
+                <!-- Player bid inputs will be dynamically generated here -->
+                <!-- Template: -->
+                <!-- <div class="player-bid-item" data-player-id="{playerId}">
+                    <div class="player-info">
+                        <span class="player-name" data-player-name>Player Name</span>
+                        <span class="player-status" data-player-status></span>
+                    </div>
+                    <div class="bid-input-wrapper">
+                        <input 
+                            type="number" 
+                            class="bid-input" 
+                            data-bid-input
+                            min="0" 
+                            max="13"
+                            placeholder="0"
+                            aria-label="Bid for Player Name"
+                        />
+                        <span class="bid-unit">hand(s)</span>
+                    </div>
+                    <div class="validation-feedback" data-bid-error aria-live="polite"></div>
+                </div> -->
+            </div>
+        </section>
+
+        <!-- Proceed Button Section -->
+        <section class="action-section">
+            <button 
+                class="proceed-btn" 
+                data-bid-proceed-btn
+                disabled
+                aria-label="Proceed to next phase with current bids"
+            >
+                Proceed
+            </button>
+            <div class="form-error" data-bid-form-error aria-live="polite" aria-atomic="true"></div>
+        </section>
+    </main>
+
+    <script src="js/bidding.js"></script>
+</body>
+</html>
